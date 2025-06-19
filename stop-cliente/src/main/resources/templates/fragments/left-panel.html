@@ -1,0 +1,65 @@
+<!-- Left Panel -->
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a th:href="@{/}"><i class="menu-icon fa fa-laptop"></i>Inicio </a>
+                </li>
+                
+                <li class="menu-title">Panel de Control</li><!-- /.menu-title -->
+                
+					<li class="menu-item-has-children dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-map-alt"></i>Dirección</a>
+					    <ul class="sub-menu children dropdown-menu">
+					        <li><i class="menu-icon ti-location-pin"></i><a th:href="@{/pais/listarPaises}">País</a></li>
+					        <li><i class="menu-icon ti-location-pin"></i><a th:href="@{/provincia/listarProvincias}">Provincia</a></li>
+					        <li><i class="menu-icon ti-location-pin"></i><a th:href="@{/departamento/listarDepartamentos}">Departamento</a></li>
+					        <li><i class="menu-icon ti-location-pin"></i><a th:href="@{/localidad/listarLocalidades}">Localidad</a></li>
+					        <li><i class="menu-icon ti-location-pin"></i><a th:href="@{/unidadNegocio/listarUnidadNegocio}">Unidad de Negocio</a></li>
+					    </ul>
+					</li>
+	                
+                
+					<li class="menu-item-has-children dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-home"></i>Visitantes</a>
+					    <ul class="sub-menu children dropdown-menu">
+					        <li><i class="menu-icon ti-write"></i><a th:href="@{/visitante/listarVisitantes}">Registro de Visitantes</a></li>
+					        <li><i class="menu-icon ti-marker"></i><a th:href="@{/visita/listarVisitas}">Visitas</a></li>
+					    </ul>
+					</li>
+	                
+	                <li class="menu-item-has-children dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-user"></i>Administrador</a>
+	                    <ul class="sub-menu children dropdown-menu">
+	                    	<li><i class="menu-icon ti-clipboard"></i><a th:href="@{/servicio/listarServicios}">Servicios</a></li>
+	                    </ul>
+	                </li>
+	                
+            	    <li class="menu-item-has-children dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-user"></i>Inmueble</a>
+	                    <ul class="sub-menu children dropdown-menu">
+	                        <li><i class="menu-icon ti-write"></i><a th:href="@{/inmueble/listarInmuebles}">Inmueble</a></li>
+	                    </ul>
+	                </li>
+	                
+					<li class="menu-item-has-children dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					        <i class="menu-icon ti-user"></i>Persona
+					    </a>
+					    <ul class="sub-menu children dropdown-menu">
+					        <!-- Empleados con icono de tarjeta de identificación -->
+					        <li><i class="menu-icon ti-id-badge"></i><a th:href="@{/empleado/listarEmpleados}">Empleados</a></li>
+					        <!-- Habitantes con icono de casa -->
+					        <li><i class="menu-icon ti-home"></i><a th:href="@{/habitante/listarHabitantes}">Habitantes</a></li>
+					        <!-- Contactos con icono de correo -->
+					        <li><i class="menu-icon ti-email"></i><a th:href="@{/contacto/listar}">Contactos</a></li>
+					    </ul>
+					</li>
+
+	                
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</aside>
+<!-- /#left-panel -->

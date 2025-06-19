@@ -1,0 +1,352 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Ela Admin - HTML5 Admin Template</title>
+<meta name="description" content="Ela Admin - HTML5 Admin Template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Usando Thymeleaf para manejar los iconos -->
+<link rel="apple-touch-icon"
+	th:href="@{https://i.imgur.com/QRAUqs9.png}">
+<link rel="shortcut icon" th:href="@{https://i.imgur.com/QRAUqs9.png}">
+
+<!-- Usamos 'th:href' para manejar las rutas de las hojas de estilo -->
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css}"
+	rel="stylesheet">
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css}"
+	rel="stylesheet" />
+
+<style>
+#weatherWidget .currentDesc {
+	color: #ffffff !important;
+}
+
+.traffic-chart {
+	min-height: 335px;
+}
+
+#flotPie1 {
+	height: 150px;
+}
+
+#flotPie1 td {
+	padding: 3px;
+}
+
+#flotPie1 table {
+	top: 20px !important;
+	right: -10px !important;
+}
+
+.chart-container {
+	display: table;
+	min-width: 270px;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#flotLine5 {
+	height: 105px;
+}
+
+#flotBarChart {
+	height: 150px;
+}
+
+#cellPaiChart {
+	height: 160px;
+}
+</style>
+</head>
+
+<body>
+	<!-- LEFT PANEL-->
+	<div th:replace="~{fragments/left-panel}"></div>
+
+	<!-- RIGHT PANEL -->
+	<div id="right-panel" class="right-panel">
+
+		<!-- HEADER -->
+		<div th:replace="~{fragments/header :: header}"></div>
+
+		<div class="content">
+
+			<!-- FORM -->
+			<div class="col-lg-10">
+				<!-- Aca se puede ajustar el ancho del formulario -->
+
+				<div class="card">
+					<div class="card-header">
+						<strong th:text="${accion}"></strong><strong> Unidad de Negocio</strong>
+					</div>
+
+					<form>
+						<div class="card-body card-block">
+
+						<div class="form-group">
+						    <input type="hidden" name="id" th:value="${unidad.id}" />
+						
+						    <label for="nombre">Nombre</label> 
+						    <input name="nombre"
+						        type="text" id="nombre" placeholder="Ingrese el nombre de la unidad"
+						        th:value="${unidad.nombre}" class="form-control"
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}"
+						        required>
+						</div>
+						
+						<div class="form-group">
+					            <label>Servicio</label>
+					            <select class="form-control" name="servicioId" th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}" required>
+					                <!-- Opción por defecto solo si es "Crear" -->
+					                <option th:if="${accion == 'Crear'}" value="">Seleccione...</option>
+					
+					                <!-- Opciones de países -->
+					                <option th:each="servicio : ${servicios}"
+					                        th:value="${servicio.id}"
+					                        th:text="${servicio.nombre}"
+					                        th:selected="${servicio.id == unidad.servicio.id}"> 
+					                </option>
+					            </select>
+						</div>
+						
+						<div class="form-group">
+						    <label for="calle">Calle</label> 
+						    <input name="calle"
+						        type="text" id="calle" placeholder="Ingrese el nombre de la calle"
+						        th:value="${unidad.direccion.calle}" class="form-control"
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}"
+						        required>
+						</div>
+						
+						<div class="form-group">
+						    <label for="numeracion">Numeración</label> 
+						    <input name="numeracion"
+						        type="text" id="numeracion" placeholder="Ingrese la numeración"
+						        th:value="${unidad.direccion.numeracion}" class="form-control"
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}"
+						        required>
+						</div>
+						
+						<div class="form-group">
+						    <label for="latitud">Latitud</label> 
+						    <input name="latitud"
+						        type="text" id="latitud" placeholder="Ingrese la latitud"
+						        th:value="${unidad.direccion.latitud}" class="form-control"
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}"
+						        required>
+						</div>
+						
+						<div class="form-group">
+						    <label for="longitud">Longitud</label> 
+						    <input name="longitud"
+						        type="text" id="longitud" placeholder="Ingrese la longitud"
+						        th:value="${unidad.direccion.longitud}" class="form-control"
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}"
+						        required>
+						</div>
+						
+						<!-- Selector de País -->
+						<div class="form-group">
+						    <label>País</label>
+						    <select class="form-control" id="paisSelect" name="paisId" onchange="cargarProvincias(this.value)" 
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}" required>
+						        <option th:if="${accion == 'Crear'}" value="">Seleccione...</option>
+						        <option th:each="pais : ${paises}" th:value="${pais.id}" th:text="${pais.nombre}" 
+						            th:selected="${pais.id == unidad.direccion.localidad.departamento.provincia.pais.id}"></option>
+						    </select>
+						</div>
+						
+						<!-- Selector de Provincia -->
+						<div class="form-group">
+						    <label>Provincia</label>
+						    <select class="form-control" id="provinciaSelect" name="provinciaId" onchange="cargarDepartamentos(this.value)" 
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}" required>
+						        <option value="">Seleccione...</option>
+						        <option th:each="provincia : ${provincias}" th:value="${provincia.id}" th:text="${provincia.nombre}" 
+						            th:selected="${provincia.id == unidad.direccion.localidad.departamento.provincia.id}"></option>
+						    </select>
+						</div>
+						
+						<!-- Selector de Departamento -->
+						<div class="form-group">
+						    <label>Departamento</label>
+						    <select class="form-control" name="departamentoId" onchange="cargarLocalidades(this.value)" 
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}" required>
+						        <option value="">Seleccione...</option>
+						        <option th:each="departamento : ${departamentos}" th:value="${departamento.id}" th:text="${departamento.nombre}" 
+						            th:selected="${departamento.id == unidad.direccion.localidad.departamento.id}"></option>
+						    </select>
+						</div>
+						
+						<!-- Selector de Localidad -->
+						<div class="form-group">
+						    <label>Localidad</label>
+						    <select class="form-control" name="localidadId" 
+						        th:disabled="${accion == 'Eliminar' OR accion == 'Consultar'}" required>
+						        <option value="">Seleccione...</option>
+						        <option th:each="localidad : ${localidades}" th:value="${localidad.id}" th:text="${localidad.nombre}" 
+						            th:selected="${localidad.id == unidad.direccion.localidad.id}"></option>
+						    </select>
+						</div>
+
+
+							<button type="submit" class="btn btn-dark"
+							    formaction="/unidadNegocio/listarUnidadNegocio" formmethod="GET" formnovalidate>Volver</button>
+
+
+							<button th:if="${accion == 'Crear'}" type="submit"
+								class="btn btn-primary"
+								formaction="/unidadNegocio/actualizar-unidad" formmethod="POST">Crear
+								unidad</button>
+
+							<button th:if="${accion == 'Modificar'}" type="submit"
+								class="btn btn-primary"
+								formaction="/unidadNegocio/actualizar-unidad" formmethod="POST">Modificar
+								unidad</button>
+
+							<button th:if="${accion == 'Eliminar'}" type="submit"
+								class="btn btn-danger"
+								formaction="/unidadNegocio/eliminar-unidad" formmethod="POST">Eliminar
+								unidad</button>
+
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+			<!-- .col-lg-6 -->
+			<!-- END FORM -->
+
+		</div>
+		<!-- .content -->
+
+	</div>
+	<!-- #right-panel -->
+	<!-- END RIGHT PANEL -->
+
+	<!-- Scripts -->
+	<div th:replace="~{fragments/js-fragments :: scripts-comunes}"></div>
+<script>
+async function cargarProvincias(paisId) {
+    const provinciaSelect = document.getElementById("provinciaSelect");
+    const departamentoSelect = document.querySelector("select[name='departamentoId']");
+    provinciaSelect.innerHTML = "<option value=''>Seleccione...</option>";  // Limpiar select de provincias
+    departamentoSelect.innerHTML = "<option value=''>Seleccione...</option>";  // Limpiar select de departamentos
+
+    if (!paisId) return;
+
+    try {
+        const response = await fetch(`/provincia/listarProvinciasPorPais/${paisId}`);
+        if (!response.ok) throw new Error("Error al obtener las provincias");
+
+        const provincias = await response.json();
+        const selectedProvincia = document.querySelector("[name='provinciaId']").getAttribute("data-selected-id");
+
+        provincias.forEach(provincia => {
+            const option = document.createElement("option");
+            option.value = provincia.id;
+            option.textContent = provincia.nombre;
+            if (provincia.id == selectedProvincia) {
+                option.selected = true;
+            }
+            provinciaSelect.appendChild(option);
+        });
+
+        // Cargar los departamentos si ya hay una provincia seleccionada
+        if (selectedProvincia) {
+            cargarDepartamentos(selectedProvincia);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+async function cargarDepartamentos(provinciaId) {
+    const departamentoSelect = document.querySelector("select[name='departamentoId']");
+    departamentoSelect.innerHTML = "<option value=''>Seleccione...</option>";  // Limpiar select de departamentos
+
+    if (!provinciaId) return;
+
+    try {
+        const response = await fetch(`/departamento/listarDepartamentosPorProvincia/${provinciaId}`);
+        if (!response.ok) throw new Error("Error al obtener los departamentos");
+
+        const departamentos = await response.json();
+        const selectedDepartamento = departamentoSelect.getAttribute("data-selected-id");
+
+        departamentos.forEach(departamento => {
+            const option = document.createElement("option");
+            option.value = departamento.id;
+            option.textContent = departamento.nombre;
+            if (departamento.id == selectedDepartamento) {
+                option.selected = true;
+            }
+            departamentoSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+async function cargarLocalidades(departamentoId) {
+    const localidadSelect = document.querySelector("select[name='localidadId']");
+    localidadSelect.innerHTML = "<option value=''>Seleccione...</option>"; // Limpiar select de localidades
+
+    if (!departamentoId) return;
+
+    try {
+        const response = await fetch(`/localidad/listarLocalidadesPorDepartamento/${departamentoId}`);
+        if (!response.ok) throw new Error("Error al obtener las localidades");
+
+        const localidades = await response.json();
+        const selectedLocalidad = localidadSelect.getAttribute("data-selected-id");
+
+        localidades.forEach(localidad => {
+            const option = document.createElement("option");
+            option.value = localidad.id;
+            option.textContent = localidad.nombre;
+            if (localidad.id == selectedLocalidad) {
+                option.selected = true;
+            }
+            localidadSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+</script>
+
+
+</body>
+</html>

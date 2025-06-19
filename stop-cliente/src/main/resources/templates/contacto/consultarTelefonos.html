@@ -1,0 +1,189 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" th:lang="${#locale.language}"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" th:lang="${#locale.language}"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" th:lang="${#locale.language}"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" th:lang="${#locale.language}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ela Admin - HTML5 Admin Template</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Usando Thymeleaf para manejar los iconos -->
+    <link rel="apple-touch-icon" th:href="@{https://i.imgur.com/QRAUqs9.png}">
+    <link rel="shortcut icon" th:href="@{https://i.imgur.com/QRAUqs9.png}">
+
+    <!-- Usamos 'th:href' para manejar las rutas de las hojas de estilo -->
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- Incluir el nuevo archivo de estilo -->
+    <link rel="stylesheet" th:href="@{/assets/css/custom-style.css}">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css}">
+</head>
+
+<body>
+    <!-- LEFT PANEL -->
+    <div th:replace="~{fragments/left-panel}"></div>
+
+	<!-- RIGHT PANEL -->
+	<div id="right-panel" class="right-panel">
+	
+	    <!-- HEADER -->
+	    <div th:replace="~{fragments/header :: header}"></div>
+	
+	    <div class="content">
+	        
+	        <!-- TABLE -->
+	        <div class="animated fadeIn">
+	            <div class="row">
+	                <div class="col-md-12">
+	                    <div class="card">
+	                        <div class="card-header">
+	                            <strong class="card-title">Lista de Contactos</strong>
+	                        </div>
+	
+							<div class="card-body d-flex justify-content-between">
+							    <!-- Botón Agregar Nuevo Teléfono alineado a la izquierda -->
+							    <a th:href="@{/contacto/editar-telefono(accion='Crear', id=${persona.id}, tipoPersona=${persona.tipoPersona})}" class="btn btn-primary">
+							        <i class="ti-plus"></i>&nbsp; Agregar nuevo teléfono
+							    </a>
+							
+							    <!-- Botón Volver alineado a la derecha -->
+							    <a th:href="@{/contacto/listar}" class="btn btn-primary ml-auto">
+							        <i class="ti-back-right"></i>&nbsp; Volver
+							    </a>
+							</div>
+
+	                        <div class="card-body">
+	                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+	                                <thead>
+	                                    <tr>
+	                                        <th>Acciones</th>
+	                                        <th>Tipo de Contacto</th>
+	                                        <th>Tipo de Teléfono</th>
+	                                        <th>Teléfono</th>
+	                                    </tr>
+	                                </thead>
+									<tbody>
+									    <!-- Iterar sobre la lista de personas, mostrando solo aquellas con teléfono -->
+									    <tr th:each="contacto : ${contactos}"
+									        th:if="${contacto != null && contacto.telefono != null}">
+									        <td>
+									            <div class="dropdown">
+									                <button class="btn btn-secondary dropdown-toggle custom-dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+									                    Opciones
+									                </button>
+									                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									                
+									                    <a class="dropdown-item"
+									                     th:href="@{/contacto/editar-telefono(accion='Modificar', id=${persona.id},contactoId=${contacto.id},tipoPersona=${persona.tipoPersona})}">Modificar</a>
+									                     
+									                    <a class="dropdown-item" 
+									                    th:href="@{/contacto/editar-telefono(accion='Consultar', id=${persona.id},contactoId=${contacto.id},tipoPersona=${persona.tipoPersona})}">Consultar</a>
+									                    
+									                    <a class="dropdown-item"
+									                     th:href="@{/contacto/editar-telefono(accion='Eliminar', id=${persona.id},contactoId=${contacto.id},tipoPersona=${persona.tipoPersona})}">Eliminar</a>
+									                </div>
+									            </div>
+									        </td>
+									        <td th:text="${contacto.tipoContacto}">Tipo de Contacto</td>
+									        <td th:text="${contacto.tipoTelefono}">Tipo de Telefono</td>
+									        <td th:text="${contacto.telefono}">Teléfono</td>
+
+									    </tr>
+									</tbody>
+	                            </table>
+	                        </div>
+
+	                        
+	                    </div>
+	                </div>
+	            </div>
+	        </div><!-- .animated -->
+	        <!-- END TABLE -->
+	
+	    </div><!-- .content -->
+	
+	</div><!-- #right-panel -->
+
+    
+    
+    <!-- END RIGHT PANEL -->
+
+		<!-- Carga de jQuery (una sola versión) -->
+		<script th:src="@{https://code.jquery.com/jquery-3.5.1.min.js}"></script>
+		
+		<!-- Carga de Bootstrap -->
+		<script th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js}"></script>
+		<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js}"></script>
+		
+		<!-- Carga de DataTables -->
+		<script th:src="@{https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js}"></script>
+		
+		<!-- Carga de los botones de DataTables -->
+		<script th:src="@{https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js}"></script>
+		<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js}"></script> <!-- Para exportar -->
+		<script th:src="@{https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js}"></script>
+		
+		<!-- Script de inicialización de DataTables -->
+		<script>
+		    $(document).ready(function() {
+		        if (!$.fn.DataTable.isDataTable('#bootstrap-data-table')) {
+		            $('#bootstrap-data-table').DataTable({
+		                "paging": true,
+		                "searching": true,
+		                "ordering": true,
+		                "info": true,
+		                "language": {
+		                    "lengthMenu": "Mostrar _MENU_ primeros",
+		                    "zeroRecords": "No se encontraron resultados",
+		                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+		                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+		                    "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+		                    "search": "Buscar:",
+		                    "paginate": {
+		                        "first": "Primero",
+		                        "last": "Último",
+		                        "next": "Siguiente",
+		                        "previous": "Anterior"
+		                    }
+		                }
+		            });
+		        }
+		
+		        // Manejo del menú desplegable personalizado
+		        $('.custom-dropdown').click(function(event) {
+		            // Cierra todos los menús excepto el actual
+		            $('.custom-dropdown').not(this).removeClass('show').next('.dropdown-menu').removeClass('show');
+		            
+		            // Alterna el menú desplegable actual
+		            $(this).toggleClass('show');
+		            $(this).next('.dropdown-menu').toggleClass('show');
+		            
+		            // Evita que el clic cierre el menú inmediatamente
+		            event.stopPropagation();
+		        });
+		
+		        // Cierra cualquier menú desplegable al hacer clic fuera de él
+		        $(document).click(function() {
+		            $('.custom-dropdown').removeClass('show');
+		            $('.dropdown-menu').removeClass('show');
+		        });
+		    });
+		</script>
+
+
+</body>
+</html>

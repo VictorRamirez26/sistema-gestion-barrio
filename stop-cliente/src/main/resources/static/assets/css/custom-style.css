@@ -1,0 +1,120 @@
+/* Ajustes personalizados para una tabla más estética */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 5px;
+    width: auto;
+}
+
+table.dataTable thead th {
+    border: 0.5rem;
+    background-color: #007bff;
+    color: white;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: white;
+}
+
+/* Centrar texto en encabezado y celdas de la tabla */
+#bootstrap-data-table th, #bootstrap-data-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Asegura que el contenedor .card-body tenga un contexto adecuado */
+.card-body {
+    position: relative; /* Necesario para posicionar el dropdown dentro de .card-body */
+}
+
+/* Ajustes personalizados para centrar el menú */
+.custom-dropdown + .dropdown-menu {
+    /* Posicionamiento centrado */
+    position: absolute !important;
+    left: 50% !important;
+    top: 55%; /* Ajusta la posición vertical del menú */
+    transform: translateX(-60%) scale(0.01) !important; 
+    min-width: 160px; /* Opcional: tamaño mínimo del menú */
+    
+    /* Transición de la animación */
+    opacity: 0 !important;
+    display: block !important; /* Muestra siempre el menú */
+    visibility: hidden !important; /* Oculta inicialmente */
+    transition: transform 0.1s ease-out, opacity 0.05s ease-out !important; /* Transición */
+}
+
+/* Muestra el menú animado cuando está abierto */
+.custom-dropdown.show + .dropdown-menu {
+    opacity: 1 !important;
+    transform: translateX(+24%) scale(1) !important; /* Centro + escala al abrir */
+    visibility: visible !important;
+}
+
+/* Color de fondo gris claro al pasar el mouse sobre cada opción */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #dbdbdb; /* Gris claro */
+}
+
+
+
+
+/* Estilo de paginación de la tabla */
+.dataTables_paginate .paginate_button {
+    border-radius: 5px;
+    background-color: white; 
+    color: white;
+}
+
+.dataTables_paginate .paginate_button.current {
+    background-color: #0056b3;
+    color: white;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    background-color: white;
+    color: white;
+}
+
+/* Agregar espacio y ancho al selector de cantidad de entradas */
+.dataTables_wrapper .dataTables_length {
+    margin-right: 1em; /* Espacio adicional a la derecha */
+}
+
+.dataTables_wrapper .dataTables_length label {
+    display: flex;
+    align-items: center;
+    gap: 0.3em; /* Espacio entre "Mostrar" y el menú */
+}
+
+.dataTables_wrapper .dataTables_length select {
+    width: 80px; /* Ajusta el ancho según sea necesario */
+    margin-left: 0.3em; /* Añade un poco de espacio entre el texto y el menú desplegable */
+}
+
+/* Aumentar el ancho del selector y hacerlo más visible */
+.dataTables_wrapper .dataTables_length select {
+    width: 55px !important; /* Forzar el ancho con !important */
+    font-size: 14px !important; /* Asegurarse de que se aplique el tamaño de la fuente */
+    padding: 5px !important; /* Aumentar el padding para hacerlo más visible */
+    height: 30px !important; /* Reducir la altura del selector */
+    line-height: 20px !important; /* Ajustar el alto de la línea para que el texto esté centrado */
+}
+
+/* Cambiar el borde cuando el selector esté enfocado */
+.dataTables_wrapper .dataTables_length select:focus {
+    border-color: #007bff !important; /* Color de borde al estar enfocado */
+    background-color: #f0f8ff !important; /* Fondo cuando el selector está enfocado */
+}
+
+/* Cambiar el fondo de las opciones seleccionadas */
+.dataTables_wrapper .dataTables_length select option:selected {
+    background-color: #007bff !important; /* Fondo de la opción seleccionada */
+    color: white !important; /* Color de la opción seleccionada */
+}
+
+/* Estilos del menú desplegable */
+.dropdown-menu {
+    max-height: 150px;
+    overflow-y: auto; /* Habilita el scroll */
+}
